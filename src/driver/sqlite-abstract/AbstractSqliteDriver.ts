@@ -22,6 +22,7 @@ import { View } from "../../schema-builder/view/View"
 import { TableForeignKey } from "../../schema-builder/table/TableForeignKey"
 import { InstanceChecker } from "../../util/InstanceChecker"
 import { UpsertType } from "../types/UpsertType"
+import { isCustomColumnType } from '../../util/IsCustomColumnType'
 
 type DatabasesMap = Record<
     string,
@@ -634,6 +635,8 @@ export abstract class AbstractSqliteDriver implements Driver {
             return "text"
         } else if (column.type === "simple-enum") {
             return "varchar"
+        } else if (isCustomColumnType(column.type)) {
+          return column.type.getDatabaseIdentifier(this)
         } else {
             return (column.type as string) || ""
         }

@@ -27,6 +27,7 @@ import { TableForeignKey } from "../../schema-builder/table/TableForeignKey"
 import { VersionUtils } from "../../util/VersionUtils"
 import { InstanceChecker } from "../../util/InstanceChecker"
 import { UpsertType } from "../types/UpsertType"
+import { isCustomColumnType } from '../../util/IsCustomColumnType'
 
 /**
  * Organizes communication with MySQL DBMS.
@@ -772,6 +773,8 @@ export class MysqlDriver implements Driver {
             return "varchar"
         } else if (column.type === "nchar" || column.type === "national char") {
             return "char"
+        } else if (isCustomColumnType(column.type)) {
+          return column.type.getDatabaseIdentifier(this)
         } else {
             return (column.type as string) || ""
         }

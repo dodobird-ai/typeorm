@@ -1,3 +1,5 @@
+import { CustomColumnType } from './CustomColumnType'
+
 /**
  * Column types used for @PrimaryGeneratedColumn() decorator.
  */
@@ -199,8 +201,6 @@ export type SimpleColumnType =
     | "array" // cockroachdb, sap, spanner
     | "cube" // postgres
     | "ltree" // postgres
-
-export type CustomColumnType = "ulid" | "vector"
 
 /**
  * Any column type column can be.

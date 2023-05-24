@@ -28,6 +28,7 @@ import { InstanceChecker } from "../../util/InstanceChecker"
 import { UpsertType } from "../types/UpsertType"
 import { OnDeleteType } from "../../metadata/types/OnDeleteType"
 import { OnUpdateType } from "../../metadata/types/OnUpdateType"
+import { isCustomColumnType } from '../../util/IsCustomColumnType'
 
 /**
  * Organizes communication with Oracle RDBMS.
@@ -624,6 +625,8 @@ export class OracleDriver implements Driver {
             return "clob"
         } else if (column.type === "simple-json") {
             return "clob"
+        } else if (isCustomColumnType(column.type)) {
+          return column.type.getDatabaseIdentifier(this)
         } else {
             return (column.type as string) || ""
         }

@@ -28,6 +28,7 @@ import { View } from "../../schema-builder/view/View"
 import { TableForeignKey } from "../../schema-builder/table/TableForeignKey"
 import { InstanceChecker } from "../../util/InstanceChecker"
 import { UpsertType } from "../types/UpsertType"
+import { isCustomColumnType } from '../../util/IsCustomColumnType'
 
 /**
  * Organizes communication with PostgreSQL DBMS.
@@ -983,8 +984,8 @@ export class PostgresDriver implements Driver {
             return "character"
         } else if (column.type === "varbit") {
             return "bit varying"
-        } else if (column.type === "vector") { 
-          return "vector"
+        } else if (isCustomColumnType(column.type)) {
+          return column.type.getDatabaseIdentifier(this)
         } else {
             return (column.type as string) || ""
         }

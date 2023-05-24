@@ -241,7 +241,7 @@
     "lint": "prettier --check \"./src/**/*.ts\" \"./test/**/*.ts\" \"./sample/**/*.ts\"",
     "format": "prettier --write --end-of-line auto \"./src/**/*.ts\" \"./test/**/*.ts\" \"./sample/**/*.ts\"",
     "deploy": "npm run compile && rm -rf lib && mkdir lib && cp -R build/* lib/",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 2"
+    "changelog": "conventional-changelog -p angular -i changelog.md -s -r 2"
   },
   "bin": {
     "typeorm": "./cli.js",

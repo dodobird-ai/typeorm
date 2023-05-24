@@ -15,6 +15,7 @@ import { View } from "../../schema-builder/view/View"
 import { ApplyValueTransformers } from "../../util/ApplyValueTransformers"
 import { DateUtils } from "../../util/DateUtils"
 import { InstanceChecker } from "../../util/InstanceChecker"
+import { isCustomColumnType } from '../../util/IsCustomColumnType'
 import { ObjectUtils } from "../../util/ObjectUtils"
 import { OrmUtils } from "../../util/OrmUtils"
 import { Driver } from "../Driver"
@@ -678,6 +679,8 @@ export class CockroachDriver implements Driver {
             return "enum"
         } else if (column.type === "json") {
             return "jsonb"
+        } else if (isCustomColumnType(column.type)) {
+          return column.type.getDatabaseIdentifier(this)
         } else {
             return (column.type as string) || ""
         }
