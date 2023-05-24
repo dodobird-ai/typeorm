@@ -200,6 +200,8 @@ export type SimpleColumnType =
     | "cube" // postgres
     | "ltree" // postgres
 
+export type CustomColumnType = "ulid" | "vector"
+
 /**
  * Any column type column can be.
  */
@@ -213,3 +215,4 @@ export type ColumnType =
     | DateConstructor
     | NumberConstructor
     | StringConstructor
+    | CustomColumnType

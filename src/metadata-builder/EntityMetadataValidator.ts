@@ -9,6 +9,7 @@ import { NoConnectionOptionError } from "../error/NoConnectionOptionError"
 import { InitializedRelationError } from "../error/InitializedRelationError"
 import { TypeORMError } from "../error"
 import { DriverUtils } from "../driver/DriverUtils"
+import { isCustomColumnType } from '../util/IsCustomColumn'
 
 /// todo: add check if there are multiple tables with the same name
 /// todo: add checks when generated column / table names are too long for the specific driver
@@ -126,6 +127,10 @@ export class EntityMetadataValidator {
             entityMetadata.columns
                 .filter((column) => !column.isVirtualProperty)
                 .forEach((column) => {
+                    if (isCustomColumnType(column.type)) {
+                      return
+                    }
+
                     const normalizedColumn = driver.normalizeType(
                         column,
                     ) as ColumnType

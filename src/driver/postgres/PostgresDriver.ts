@@ -983,6 +983,8 @@ export class PostgresDriver implements Driver {
             return "character"
         } else if (column.type === "varbit") {
             return "bit varying"
+        } else if (column.type === "vector") { 
+          return "vector"
         } else {
             return (column.type as string) || ""
         }
